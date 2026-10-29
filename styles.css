@@ -1,0 +1,185 @@
+/* Minimal base — restyle freely later */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --gap: 0.75rem;
+  --pad: clamp(1rem, 3vw, 2.5rem);
+  --text: #1a1a1a;
+  --muted: #555;
+  --border: #ccc;
+  --bg: #fafafa;
+  --tile: #fff;
+  --accent: #0b5fff;
+  /* Fixed track size — tiles do not stretch with the viewport */
+  --cell: 11rem;
+  --reflow-ms: 420ms;
+  --reflow-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.45;
+}
+
+.site-header,
+.site-footer {
+  padding: var(--pad);
+  max-width: 90rem;
+  margin-inline: auto;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.site-header h1 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.lede {
+  margin: 0;
+  max-width: 36rem;
+  color: var(--muted);
+}
+
+/*
+  Fixed-size tracks + auto-fill: column count changes on resize,
+  but each cell keeps the same pixel size (no 1fr stretching).
+*/
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--cell));
+  grid-auto-rows: var(--cell);
+  grid-auto-flow: dense;
+  gap: var(--gap);
+  justify-content: start;
+  padding: 0 var(--pad) var(--pad);
+  max-width: 90rem;
+  margin-inline: auto;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  min-height: 0;
+  padding: 0.85rem 0.95rem;
+  background: var(--tile);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.project h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.meta {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.desc {
+  margin: 0;
+  flex: 1;
+  font-size: 0.9rem;
+  overflow: hidden;
+}
+
+.open-max {
+  margin-top: auto;
+  align-self: flex-start;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.open-max:hover,
+.open-max:focus-visible {
+  color: var(--text);
+}
+
+/* Variable spans — footprint stays fixed in cell units */
+.size-sm {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.size-md {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+
+.size-lg {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.size-wide {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.size-tall {
+  grid-column: span 1;
+  grid-row: span 3;
+}
+
+@media (max-width: 24rem) {
+  :root {
+    --cell: 9.5rem;
+  }
+
+  .size-lg,
+  .size-wide {
+    grid-column: span 1;
+  }
+
+  .size-lg {
+    grid-row: span 2;
+  }
+}
+
+.site-footer {
+  padding-block: 2rem var(--pad);
+  font-family: system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --reflow-ms: 0ms;
+  }
+}
